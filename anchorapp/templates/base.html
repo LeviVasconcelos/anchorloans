@@ -2,19 +2,24 @@
 	<head>
 		<meta charset="utf-8" http-equiv="Content-type" content="text/html">
 		<title>Anchorloans Test</title>
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 	</head>
 	<body>
 		<div class="title">
-			<h1> Problem 1 </h1>
+			<h1 class="center"> Problem 1 - Divisibility </h1> 
 		</div>
 		<div class="input_div">
-			<form method=POST enctype=multipart/form-data action="{{ url_for('upload') }}">
+			<form class='form-load' method=POST enctype=multipart/form-data action="{{ url_for('upload') }}">
 				<input type=file name=inpt>  <input type="submit" value="Load File"> </br>
 			</form>
-			<form>
-				<textarea rows=50 cols=50 name="filetext">
+			<form class='form-load'>
+				<textarea rows=30 cols=25 name="input" value="Input file." readonly>
 				{{ file_text }}
 				</textarea>
+				<textarea rows=30 cols=25 name="output" value="Output." readonly>
+				{{ file_text }}
+				</textarea>
+
 				<input type=submit name="send" value="Compute">
 			</form>
 		</div>

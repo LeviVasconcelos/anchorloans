@@ -10,15 +10,12 @@
 		</div>
 		<div class="input_div">
 			<form class='form-load' method=POST enctype=multipart/form-data action="{{ url_for('upload') }}">
-				<input type=file name=inpt>  <input type="submit" value="Load File"> </br>
+				<input type=file name=inpt> <input type="submit" value="Load File"> </br>
 			</form>
-			<form class='form-load'>
-				<textarea rows=30 cols=25 name="input" value="Input file." readonly>
-				{{ file_text }}
-				</textarea>
-				<textarea rows=30 cols=25 name="output" value="Output." readonly>
-				{{ file_text }}
-				</textarea>
+			<h2 class="center"> File Loaded: {% if g.filename %} {{ g.filename }} {% else %} None yet. {% endif %} </h2>
+			<form class='form-load' action="{{ url_for('compute') }}">
+				<textarea rows=30 cols=25 name="input" value="Input file." readonly>{{ input_text }}</textarea>
+				<textarea rows=30 cols=25 name="output" value="Output." readonly>{{ output_text }}</textarea>
 
 				<input type=submit name="send" value="Compute">
 			</form>

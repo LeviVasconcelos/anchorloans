@@ -40,11 +40,22 @@ class FileParser:
 				self.instances.append(params)
 
 
+class foo:
+	M = 100
+	def __init__(self, a):
+		self.a = None
+		self.setVar(a)
 
-parser = FileParser('teste.txt')
-try:
-	parser.parse()
-	for i in parser.instances:
-		print i
-except FileValidationError as e:
-	print e
+	def setVar(self, a):
+		if a > self.M:
+			print 'nao pode'
+		else:
+			print 'pode'
+			self.a = a
+
+
+t = foo(10)
+x = foo(1000)
+print t.M, x.M
+t.M = 110
+print t.M, x.M

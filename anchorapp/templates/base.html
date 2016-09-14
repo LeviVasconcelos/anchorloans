@@ -12,7 +12,7 @@
 			<form class='form-load' method=POST enctype=multipart/form-data action="{{ url_for('upload') }}">
 				<input type=file name=inpt> <input type="submit" value="Load File"> </br>
 			</form>
-			<h2 class="center"> File Loaded: {% if g.filename %} {{ g.filename }} {% else %} None yet. {% endif %} </h2>
+			<h2 class="center"> File Loaded: {% if session.filename %} {{ session.filename }} {% else %} None yet. {% endif %} </h2>
 			<form class='form-load' action="{{ url_for('compute') }}">
 				<textarea rows=30 cols=25 name="input" value="Input file." readonly>{{ input_text }}</textarea>
 				<textarea rows=30 cols=25 name="output" value="Output." readonly>{{ output_text }}</textarea>

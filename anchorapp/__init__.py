@@ -8,6 +8,7 @@ ALLOWED_EXTENSIONS = set(['txt'])
 
 app = Flask(__name__)
 app.config['UPLOADED_INPFILES_DEST'] = os.path.join(os.path.dirname(__file__), 'inputs/')
+app.config['SECRET_KEY'] = 'sakdjfh34759023asljkfh28937ljfasd983247532'
 inpfiles = UploadSet('inpfiles', ('txt',))
 configure_uploads(app, (inpfiles,))
 

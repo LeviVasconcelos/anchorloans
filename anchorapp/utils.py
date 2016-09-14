@@ -15,14 +15,19 @@ class FileValidationError(Exception):
     pass
 
 class DivisibilityProblem:
-	def __init__(self, max = None, x = None, y = None):
-		self.max_rage = max
-		self.x = x
-		self.y = y
-		self.seq = []
+	MAX_RANGE = 100000
+
+	def __init__(self, max_range = None, x = None, y = None):
+		self.max_range = None
+		self.x = None
+		self.y = None
+		#self.setInstance(max_range, x, y)
 
 	def setInstance(self, m, x, y):
 		if (m and x and y) is not None:
+			#Validation goes here
+			if m > self.MAX_RANGE: 
+				raise BadInstance('Invalid Intance: range higher than %d' % (self.MAX_RANGE))
 			self.max_range = m
 			self.x = x
 			self.y = y
@@ -37,7 +42,7 @@ class DivisibilityProblem:
 			raise BadInstance('Invalid Intance.')
 
 	def getSolution(self):
-		self._solve(self)
+		self._solve()
 		return self.seq
 
 

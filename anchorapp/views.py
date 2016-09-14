@@ -1,4 +1,4 @@
-from wbsite import app, inpfiles
+from anchorapp import app, inpfiles
 from flask_uploads import UploadNotAllowed
 from flask import redirect, url_for, request, render_template
 from utils import DivisibilityProblem

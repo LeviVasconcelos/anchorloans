@@ -1,24 +1,20 @@
 <html>
 	<head>
-		<meta charset="utf-8" http-equiv="Content-type" content="text/html">
+		<meta charset="utf-8">
+    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+    	<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}" /> 
+
 		<title>Anchorloans Test</title>
-		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 	</head>
 	<body>
-		<div class="title">
-			<h1 class="center"> Problem 1 - Divisibility </h1> 
-		</div>
-		<div class="input_div">
-			<form class='form-load' method=POST enctype=multipart/form-data action="{{ url_for('upload') }}">
-				<input type=file name=inpt> <input type="submit" value="Load File"> </br>
-			</form>
-			<h2 class="center"> File Loaded: {% if session.filename %} {{ session.filename }} {% else %} None yet. {% endif %} </h2>
-			<form class='form-load' action="{{ url_for('compute') }}">
-				<textarea rows=30 cols=25 name="input" value="Input file." readonly>{{ input_text }}</textarea>
-				<textarea rows=30 cols=25 name="output" value="Output." readonly>{{ output_text }}</textarea>
-
-				<input type=submit name="send" value="Compute">
-			</form>
+		<div class="container">
+			<div class="page-header">
+				<h1> Problem 1 - Divisibility </h1> 
+				<leads> Print all integers ai such that ai is divisible by x and not divisible by y, where 1 < ai < n < 100000. </br> Input: First, you are given t (t < 100) - the number of test cases. In each of the following t lines, 3 integers: n x y. You might assume also that x < n and x is not divisible by y. </br> Output: In each of the following t lines, numbers requested in the problem description in the separated by a single space in ascending order. Print all integers ai such that ai is divisible by x and not divisible by y, where 1 < ai < n < 100000.
+				</leads>
+			</div>
+			{% block body_ext %}{%endblock%}
 		</div>
 	</body>
 </html>

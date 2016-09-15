@@ -3,12 +3,13 @@ from flask_uploads import UploadSet, configure_uploads
 from werkzeug.utils import secure_filename
 import os
 
-UPLOAD_FOLDER = '/inputs'
+FILE_REL_FOLDER = 'files/'
+INPUT_FILE = 'input.txt'
+OUTPUT_FILE = 'output.txt'
 ALLOWED_EXTENSIONS = set(['txt'])
 
 app = Flask(__name__)
-app.config['UPLOADED_INPFILES_DEST'] = os.path.join(os.path.dirname(__file__), 'inputs/')
-app.config['SECRET_KEY'] = 'sakdjfh34759023asljkfh28937ljfasd983247532'
+app.config['UPLOADED_INPFILES_DEST'] = os.path.join(os.path.dirname(__file__), FILE_REL_FOLDER)
 inpfiles = UploadSet('inpfiles', ('txt',))
 configure_uploads(app, (inpfiles,))
 

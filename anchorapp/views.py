@@ -1,38 +1,41 @@
-from anchorapp import app, inpfiles
+from anchorapp import app, inpfiles, INPUT_FILE, OUTPUT_FILE, FILE_REL_FOLDER
 from flask_uploads import UploadNotAllowed
 from flask import redirect, url_for, request, render_template, session
 from utils import DivisibilityProblem, BadInstance, FileValidationError, FileParser
 import os
 
+
 @app.route('/')
 def start():
-	return render_template('base.html', input_text='Input file text', output_text='Output file text')
+	return redirect(url_for('upload'))
 
-@app.route('/upload', methods=['POST'])
+@app.route('/upload', methods=['POST', 'GET'])
 def upload():
 	if 'inpt' in request.files:
+		filepath = os.path.join(app.config['UPLOADED_INPFILES_DEST'],	INPUT_FILE)
+		if os.path.exists( filepath ):
+			os.remove(filepath)
 		try:
-			session['filename'] = inpfiles.save(request.files['inpt'])
-			session['path_to_file'] = os.path.join(os.path.dirname(__file__), 'inputs/' + session['filename'])
-			input_text = None
-			with open(session['path_to_file'],'r') as file:
-				session['input_text'] = file.read()
-			return render_template('base.html', input_text=session['input_text'], output_text='Output file text, generate on Compute button.')
+			inpfiles.save(request.files['inpt'], name=INPUT_FILE)
+			return redirect('compute')
 		except UploadNotAllowed as e: #TO-DO: FLASH ERROR MESSAGE INTO THE SAME TEMPLATE.
 			return 'Sorry, this upload was not allowed, text files only.'
-	return render_template('base.html', input_text='Input file text', output_text='Output file text')	
+
+	return render_template('upload.html')	
 
 @app.route('/compute')
 def compute():
 	solver = DivisibilityProblem()
-	#filename = getattr(session, 'filename', None)
-	parser = FileParser(filename = session['path_to_file'])
+	input_filepath = os.path.join(os.path.dirname(__file__), FILE_REL_FOLDER + INPUT_FILE)
+	output_filepath = os.path.join(os.path.dirname(__file__), FILE_REL_FOLDER + OUTPUT_FILE)
+	
+	parser = FileParser(filename = input_filepath)
 	try:
 		parser.parse()
 	except FileValidationError as e:
 		return e
 	try:
-		with open('tmp.txt','w') as out_file:
+		with open(output_filepath,'w') as out_file:
 			for instance in parser.instances:
 				solver.setInstance(instance[0], instance[1], instance[2])
 				out_file.write(' '.join(str(i) for i in solver.getSolution()) + '\n')
@@ -44,9 +47,14 @@ def compute():
 
 	else:
 		out_text = None
-		with open('tmp.txt','r') as out_file:
-			out_text = out_file.read()
+		with open(output_filepath,'r') as out_file:
+			output_text = out_file.read()
+			out_sz = len(output_text.split('\n'))
+		with open(input_filepath, 'r') as input_file:
+			input_text = input_file.read()
+			in_sz = len(input_text.split('\n'))
 
-		return render_template('base.html', input_text=session['input_text'], output_text=out_text)
+		sz = max(in_sz,out_sz) + 1
+		return render_template('display.html', input_text=input_text, output_text=output_text, in_sz=sz, out_sz=sz )
 
 	return render_template('base.html')

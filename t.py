@@ -54,8 +54,11 @@ class foo:
 			self.a = a
 
 
-t = foo(10)
-x = foo(1000)
-print t.M, x.M
-t.M = 110
-print t.M, x.M
+parser = FileParser('1line')
+try:
+	parser.parse()
+except FileValidationError as e:
+	print e
+else:
+	for l in parser.instances:
+		print l

@@ -1,6 +1,6 @@
 from anchorapp import app, inpfiles, INPUT_FILE, OUTPUT_FILE, FILE_REL_FOLDER
-from flask_uploads import UploadNotAllowed
-from flask import redirect, url_for, request, render_template, session
+from flask_uploads import UploadNotAllowed, UploadSet
+from flask import redirect, url_for, request, render_template, flash, session
 from utils import DivisibilityProblem, BadInstance, FileValidationError, FileParser
 import os
 
@@ -15,16 +15,22 @@ def upload():
 		filepath = os.path.join(app.config['UPLOADED_INPFILES_DEST'],	INPUT_FILE)
 		if os.path.exists( filepath ):
 			os.remove(filepath)
-		try:
+		if inpfiles.file_allowed(request.files['inpt'], request.files['inpt'].filename):
 			inpfiles.save(request.files['inpt'], name=INPUT_FILE)
+			session['submited'] = True
 			return redirect('compute')
-		except UploadNotAllowed as e: #TO-DO: FLASH ERROR MESSAGE INTO THE SAME TEMPLATE.
-			return 'Sorry, this upload was not allowed, text files only.'
-
+		else:
+			flash('Sorry, this upload was not allowed, .txt files only.')
+			return render_template('upload.html')
+	session['submited'] = False
 	return render_template('upload.html')	
 
 @app.route('/compute')
 def compute():
+	if not session.get('submited'):
+		flash('Input file required.')
+		return redirect(url_for('upload'))
+
 	solver = DivisibilityProblem()
 	input_filepath = os.path.join(os.path.dirname(__file__), FILE_REL_FOLDER + INPUT_FILE)
 	output_filepath = os.path.join(os.path.dirname(__file__), FILE_REL_FOLDER + OUTPUT_FILE)
@@ -33,7 +39,9 @@ def compute():
 	try:
 		parser.parse()
 	except FileValidationError as e:
-		return e
+		flash(e.message)
+		return redirect(url_for('upload'))
+
 	try:
 		with open(output_filepath,'w') as out_file:
 			for instance in parser.instances:
@@ -41,10 +49,12 @@ def compute():
 				out_file.write(' '.join(str(i) for i in solver.getSolution()) + '\n')
 	#TO-DO: FLASH ERRORS
 	except BadInstance as e:
-		return e
-	except IOError as e:
-		return e
+		flash(e.message)
+		return redirect(url_for('upload'))
 
+	except IOError as e:
+		flash(e.message)
+		return redirect(url_for('upload'))
 	else:
 		out_text = None
 		with open(output_filepath,'r') as out_file:
@@ -57,4 +67,3 @@ def compute():
 		sz = max(in_sz,out_sz) + 1
 		return render_template('display.html', input_text=input_text, output_text=output_text, in_sz=sz, out_sz=sz )
 
-	return render_template('base.html')

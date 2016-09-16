@@ -3,10 +3,11 @@
 
 ## ABOUT THIS DOCUMENT 
 
-This document reports about the anchorloans test assignment.  
+This document reports about the anchorloans test assignment.
+
 Problem: "Problem One: Divisibility"  
-author: Levi Osterno Vasconcelos  
-date: 09/15/016  
+Author: Levi Osterno Vasconcelos  
+Date: 09/15/016  
 
 
 ## ASSUMPTIONS
@@ -50,7 +51,7 @@ root/
 
 This structure modularizes the web views and the backend processing, where all view-related is handled at views.py and the backend operations by the specific modules. All test-related files are within anchorapp/tests. The implementation design was thought to keep the code design simple as well as maintainable. Several features were implemented in that regard, such as automated tests, where a new test can be easily added by just creating a .txt following a filename pattern: "\<input_name\>\_\<fail or succeed\>\_\<error_code\>.txt" in tests/input_files.
 
-### App Flow
+### APP FLOW
 
 URL | GET | POST
 --- | --- | -----

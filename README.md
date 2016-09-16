@@ -74,17 +74,11 @@ The tests were thought to be easily extendable and thus, automated whenever poss
 
 Assuming you already have virtualenv and pip installed, follow:
 ```
-~$ virtualenv \<dir\>  
-~$ cd \<dir\>  
+~$ virtualenv <dir>  
+~$ cd <dir>  
 <dir>$ git clone https://github.com/LeviVasconcelos/anchorloans.git  
 <dir>/anchorloans$ cd anchorloans  
 <dir>/anchorloans$ pip install -r requirements.txt  
 <dir>/anchorloans$ python run.py  
 ```
 Now, open your browser and access: "http://localhost:5000/".
-
-
-
-
-
-

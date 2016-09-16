@@ -1,6 +1,6 @@
 from exceptions import FileValidationError
 from validator import validate
-from configurations import ERROR_MESSAGES
+from configurations import ERROR_MESSAGES, MAX_RANGE, INSTANCE_SZ
 
 """
 Implements the required file parser
@@ -16,6 +16,22 @@ class FileParser:
 		self.filename = filename
 		self.size = None
 		self.instances = []
+
+	"""
+	Method for validating a parsed file.
+		-return: Boolean
+		-raise: FileValidationError
+	"""
+	def validate(self):
+		if self.size != len(self.instances):
+			raise FileValidationError(ERROR_MESSAGES['sz_err'])
+		for i in self.instances:
+			if len(i) != INSTANCE_SZ:
+				raise FileValidationError(ERROR_MESSAGES['sz_instance'])
+			if i[0] > MAX_RANGE:
+				raise FileValidationError(ERROR_MESSAGES['max_range'])
+		return True
+
 
 	"""
 	Parses the file to the object. 
@@ -39,5 +55,5 @@ class FileParser:
 			except ValueError:
 				raise FileValidationError(ERROR_MESSAGES['param_not_int'])
 
-			validate(self.size, self.instances)
+			self.validate()
 

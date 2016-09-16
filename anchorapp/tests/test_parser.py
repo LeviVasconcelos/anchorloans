@@ -10,6 +10,9 @@ class FilePaserTestCase(unittest.TestCase):
 		self.filepath = os.path.dirname(__file__)
 		self.files = glob.glob(os.path.join(self.filepath,TEST_INPUT_DIR + '*.txt'))
 		self.p = FileParser()
+		self.goodCases = [[10, 2, 4], [300, 3, 99], [40, 2, 7]]
+		self.badCases = [[100000, 3, 1], [4, 2, 1, 3], [1], []]
+
 
 	def test_InitFileParser(self):
 		self.assertIsNone(self.p.filename)
@@ -33,6 +36,46 @@ class FilePaserTestCase(unittest.TestCase):
 		self.assertEqual(tags[1],'fail')
 		tags = self._parseFileName(TEST_SUCCESS_EXP)
 		self.assertEqual(tags[1],'success')
+
+	def test_Validator(self):
+		self.p.size=len(self.goodCases)
+		self.p.instances= self.goodCases
+		self.assertTrue(self.p.validate())
+
+		with self.assertRaises(FileValidationError) as cm:
+			self.p.size = len(self.badCases)
+			self.p.instances = self.badCases
+			self.p.validate()
+
+		with self.assertRaises(FileValidationError) as cm:
+			self.p.size = len(self.goodCases)+3
+			self.p.instances = self.goodCases
+
+			self.p.validate()
+
+		with self.assertRaises(FileValidationError) as cm:
+			self.p.size = 1
+			self.p.instances = [self.badCases[0]]
+
+			self.p.validate()
+
+		with self.assertRaises(FileValidationError) as cm:
+			self.p.size = 1
+			self.p.instances = [self.badCases[1]]
+
+			self.p.validate()
+
+		with self.assertRaises(FileValidationError) as cm:
+			self.p.size = 1
+			self.p.instances = [self.badCases[2]]
+
+			self.p.validate()
+
+		with self.assertRaises(FileValidationError) as cm:
+			self.p.size = 1
+			self.p.instances = [self.badCases[3]]
+
+			self.p.validate()
 
 
 	'''

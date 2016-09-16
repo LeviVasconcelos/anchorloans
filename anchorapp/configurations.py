@@ -4,7 +4,7 @@ ERROR_MESSAGES = {
 	'max_range':'Invalid file format: MAX_RANGE exceeded.',
 	'sz_not_int':'Invalid file format: first line must be an integer.',
 	'param_not_int':'Invalid file format: integer not recognized.',
-	'file_not_allowed':'File format not allowed, msut be .txt.',
+	'file_not_allowed':'File format not allowed, must be .txt.',
 }
 
 #Config variables

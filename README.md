@@ -3,10 +3,11 @@
 
 ## ABOUT THIS DOCUMENT 
 
-This document reports about the anchorloans test assignment.  
+This document reports about the anchorloans test assignment.
+
 Problem: "Problem One: Divisibility"  
-author: Levi Osterno Vasconcelos  
-date: 09/15/016  
+Author: Levi Osterno Vasconcelos  
+Date: 09/15/016  
 
 
 ## ASSUMPTIONS

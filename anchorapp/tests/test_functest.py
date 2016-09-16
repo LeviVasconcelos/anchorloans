@@ -1,10 +1,11 @@
-import os
 from .. import app
-import  flask
+from ..configurations import TEST_INPUT_DIR, TEST_SUCCESS_EXP, TEST_FAIL_EXP
 from StringIO import StringIO
+import  flask
+import os
 import unittest
 import glob
-from ..configurations import TEST_INPUT_DIR, TEST_SUCCESS_EXP, TEST_FAIL_EXP
+
 
 
 class AnchorappTestCase(unittest.TestCase):

@@ -32,9 +32,9 @@ root/
 ------configurations.py  
 ------exceptions.py  
 ---tests/  
-------test_parser.py  
-------test_solver.py
-------test_validator.py
+------test_parser.py    
+------test_solver.py  
+------test_validator.py  
 ------test_functest.py  
 ------input_files/  
 ------ ...  
@@ -65,22 +65,22 @@ The flow was chosen to be farily simple. It starts redirecting the user to the '
 
 Regarding application testing, I have deployed unit tests and functional tests. To
 run the tests, one can execute the following command from the root folder:
-'''
+```
 anchorloans$ python -m unittest discover -v
-'''
+```
 The tests were thought to be easily extendable and thus, automated whenever possible.
 
 ## INSTALLATION GUIDE 
 
 Assuming you already have virtualenv and pip installed, follow:
-'''
+```
 ~$ virtualenv \<dir\>  
 ~$ cd \<dir\>  
 <dir>$ git clone https://github.com/LeviVasconcelos/anchorloans.git  
 <dir>/anchorloans$ cd anchorloans  
 <dir>/anchorloans$ pip install -r requirements.txt  
 <dir>/anchorloans$ python run.py  
-'''
+```
 Now, open your browser and access: "http://localhost:5000/".
 
 

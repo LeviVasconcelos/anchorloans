@@ -1,5 +1,4 @@
 from exceptions import FileValidationError
-from validator import validate
 from configurations import ERROR_MESSAGES, MAX_RANGE, INSTANCE_SZ
 
 """
